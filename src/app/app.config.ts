@@ -4,7 +4,7 @@ import { CandidateDataSource } from './services/candidate-data-source';
 import { MockCandidateService } from './services/mock-candidate.service';
 import { CandidateService } from './services/candidate.service';
 
-const useMock = true;
+const useMock = false;
 
 export const appConfig: ApplicationConfig = {
   providers: [
