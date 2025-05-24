@@ -7,21 +7,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 
-import { CandidateDataSource } from '../services/candidate-data-source';
+import { CandidateDataSource, CandidateDTO } from '../services/candidate-data-source';
+import { CandidateStoreService } from '../services/candidate-store.service';
+import { CandidateTableComponent } from './candidate-table/candidate-table.component';
 
 @Component({
   selector: 'app-candidate-form',
   standalone: true,
   styleUrls: ['./candidate-form.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCardModule],
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCardModule, CandidateTableComponent],
   templateUrl: './candidate-form.component.html',
 })
 export class CandidateFormComponent {
   form: FormGroup;
+  candidates: CandidateDTO[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private dataSource: CandidateDataSource
+    private dataSource: CandidateDataSource,
+    private store: CandidateStoreService
   ) {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
@@ -46,10 +50,12 @@ export class CandidateFormComponent {
 
       this.dataSource.uploadCandidate(formData)
         .then((response: any) => {
-          console.log('Respuesta del backend:', response);
+          console.log('Response:', response);
+          this.candidates = [...this.candidates, ...response];
+          this.store.addCandidates(response);
         })
         .catch((error: any) => {
-          console.error('Error al enviar el formulario:', error);
+          console.error('Error:', error);
         });
     }
   }

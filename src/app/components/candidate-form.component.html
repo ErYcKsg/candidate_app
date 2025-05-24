@@ -4,19 +4,19 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
       <div class="form-grid">
         <mat-form-field appearance="outline">
-          <mat-label>Nombre</mat-label>
+          <mat-label>Name</mat-label>
           <input class="text-input" matInput formControlName="name" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Apellidos</mat-label>
+          <mat-label>Surname</mat-label>
           <input class="text-input" matInput formControlName="surname" />
         </mat-form-field>
 
         <div class="file-input">
           <label for="file" class="file-label">
             <mat-icon>upload_file</mat-icon>
-            <span>Seleccionar archivo Excel</span>
+            <span>Select excel file</span>
           </label>
           <input id="file" type="file" (change)="onFileChange($event)" accept=".xlsx" />
         </div>
@@ -24,9 +24,13 @@
 
       <div class="actions">
         <button mat-raised-button color="warn" type="submit" [disabled]="form.invalid" [ngClass]="{ 'santander-button': true, 'disabled': form.invalid }">
-          Enviar
+          Send
         </button>
       </div>
     </form>
   </mat-card-content>
 </mat-card>
+<div>
+  <app-candidate-table [candidates]="candidates"></app-candidate-table>
+</div>
+
