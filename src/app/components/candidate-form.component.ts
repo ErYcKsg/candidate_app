@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { CandidateDataSource, CandidateDTO } from '../services/candidate-data-source';
 import { CandidateStoreService } from '../services/candidate-store.service';
 import { CandidateTableComponent } from './candidate-table/candidate-table.component';
+import { catchError, from, Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-candidate-form',
@@ -20,13 +21,15 @@ import { CandidateTableComponent } from './candidate-table/candidate-table.compo
 })
 export class CandidateFormComponent {
   form: FormGroup;
-  candidates: CandidateDTO[] = [];
+  readonly candidates$: Observable<CandidateDTO[]>;
 
   constructor(
     private formBuilder: FormBuilder,
     private dataSource: CandidateDataSource,
     private store: CandidateStoreService
   ) {
+    this.candidates$ = this.store.candidates$
+
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -48,15 +51,13 @@ export class CandidateFormComponent {
       formData.append('surname', this.form.value.surname!);
       formData.append('file', this.form.value.file!);
 
-      this.dataSource.uploadCandidate(formData)
-        .then((response: any) => {
-          console.log('Response:', response);
-          this.candidates = [...this.candidates, ...response];
-          this.store.addCandidates(response);
-        })
-        .catch((error: any) => {
-          console.error('Error:', error);
-        });
+      from(this.dataSource.uploadCandidate(formData)).pipe(
+      tap(response => this.store.addCandidates(response)),
+      catchError(error => {
+        console.error(error);
+        return of([]);
+      })
+    ).subscribe();
     }
   }
 }

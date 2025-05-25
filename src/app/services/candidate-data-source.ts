@@ -1,3 +1,4 @@
+import { Observable } from "rxjs";
 
 export interface CandidateDTO {
   name: string;
@@ -8,5 +9,5 @@ export interface CandidateDTO {
 }
 
 export abstract class CandidateDataSource {
-  abstract uploadCandidate(formData: FormData): Promise<CandidateDTO[]>;
+  abstract uploadCandidate(formData: FormData): Observable<CandidateDTO[]>;
 }

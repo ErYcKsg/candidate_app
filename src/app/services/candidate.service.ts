@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CandidateDataSource, CandidateDTO } from './candidate-data-source';
-import { firstValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,8 @@ export class CandidateService extends CandidateDataSource {
   constructor(private http: HttpClient) {
     super();
   }
-  override uploadCandidate(formData: FormData): Promise<CandidateDTO[]> {
-    return firstValueFrom(this.http.post<CandidateDTO[]>(`${this.API_URL}/candidates/upload`, formData));
-  }
+  
+  uploadCandidate(formData: FormData): Observable<CandidateDTO[]> {
+  return this.http.post<CandidateDTO[]>(`${this.API_URL}/candidates/upload`, formData);
+}
 }
