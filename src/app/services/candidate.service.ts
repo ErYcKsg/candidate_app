@@ -6,12 +6,10 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CandidateService extends CandidateDataSource {
+export class CandidateService implements CandidateDataSource {
   private readonly API_URL = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) {
-    super();
-  }
+  constructor(private http: HttpClient) {}
   
   uploadCandidate(formData: FormData): Observable<CandidateDTO[]> {
   return this.http.post<CandidateDTO[]>(`${this.API_URL}/candidates/upload`, formData);
