@@ -7,9 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 
-import { CandidateDataSource, CandidateDTO } from '../services/candidate-data-source';
-import { CandidateStoreService } from '../services/candidate-store.service';
-import { CandidateTableComponent } from './candidate-table/candidate-table.component';
+import { CandidateDataSource, CandidateDTO } from '../../../infrastructure/data/candidate-data-source';
+import { CandidateStoreService } from '../../../application/store/candidate-store.service';
+import { CandidateTableComponent } from '../candidate-table/candidate-table.component';
 import { catchError, from, Observable, of, tap } from 'rxjs';
 
 @Component({

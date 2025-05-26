@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CandidateStoreService } from './candidate-store.service';
-import { CandidateDTO } from './candidate-data-source';
+import { CandidateDTO } from '../infrastructure/data/candidate-data-source';
 
 describe('CandidateStoreService', () => {
   let service: CandidateStoreService;

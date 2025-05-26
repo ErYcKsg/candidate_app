@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CandidateFormComponent } from './components/candidate-form.component';
+import { CandidateFormComponent } from './presentation/candidate/candidate-form/candidate-form.component';
 
 @Component({
   selector: 'app-root',

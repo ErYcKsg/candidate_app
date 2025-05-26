@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CandidateStoreService } from '../../services/candidate-store.service';
-import { CandidateDTO } from '../../services/candidate-data-source';
+import { CandidateStoreService } from '../../../application/store/candidate-store.service';
+import { CandidateDTO } from '../../../infrastructure/data/candidate-data-source';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';

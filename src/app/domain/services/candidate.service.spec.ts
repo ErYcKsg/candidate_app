@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CandidateService } from '../services/candidate.service';
-import { MockCandidateService } from './mock-candidate.service';
+import { MockCandidateService } from '../../infrastructure/data/mock-candidate.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 

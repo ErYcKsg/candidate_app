@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CandidateDataSource, CandidateDTO } from './candidate-data-source';
+import { CandidateDataSource, CandidateDTO } from '../../infrastructure/data/candidate-data-source';
 import { Observable } from 'rxjs';
 
 @Injectable({
