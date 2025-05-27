@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { CandidateDataSource, CandidateDTO } from '../../../infrastructure/data/candidate-data-source';
 import { CandidateStoreService } from '../../../application/store/candidate-store.service';
@@ -16,7 +17,7 @@ import { catchError, from, Observable, of, tap } from 'rxjs';
   selector: 'app-candidate-form',
   standalone: true,
   styleUrls: ['./candidate-form.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCardModule, CandidateTableComponent],
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCardModule, CandidateTableComponent, MatSnackBarModule],
   templateUrl: './candidate-form.component.html',
 })
 export class CandidateFormComponent {
@@ -26,7 +27,8 @@ export class CandidateFormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private dataSource: CandidateDataSource,
-    private store: CandidateStoreService
+    private store: CandidateStoreService,
+    private snackBar: MatSnackBar
   ) {
     this.candidates$ = this.store.candidates$
 
@@ -54,7 +56,11 @@ export class CandidateFormComponent {
       from(this.dataSource.uploadCandidate(formData)).pipe(
       tap(response => this.store.addCandidates(response)),
       catchError(error => {
-        console.error(error);
+        const message =
+          error?.error?.message || 'Error processing Excel file.';
+        this.snackBar.open(message, 'Close', {
+          duration: 4000,
+        });
         return of([]);
       })
     ).subscribe();
